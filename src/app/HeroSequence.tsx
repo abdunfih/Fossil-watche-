@@ -18,6 +18,7 @@ export default function HeroSequence() {
 
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
+      img.crossOrigin = "anonymous";
       // Ensure number is padded to 3 digits (001, 002, etc.)
       const paddedIndex = String(i).padStart(3, '0');
       img.src = `/images/herosection/ezgif-frame-${paddedIndex}.png`;
