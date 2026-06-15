@@ -15,18 +15,26 @@ const outfit = Outfit({
 });
 
 export const metadata: Metadata = {
-  title: "Fossil Townsman ME3269 - Weightless Precision",
-  description: "Suspend Time. Defy Gravity.",
+  title: "Fossil Townsman ME3269 — Weightless Precision",
+  description: "Suspend Time. Defy Gravity. The Fossil Townsman ME3269 — automatic self-winding precision in black stainless steel.",
+  themeColor: "#0a0a0a",
+  openGraph: {
+    title: "Fossil Townsman ME3269 — Weightless Precision",
+    description: "Suspend Time. Defy Gravity.",
+    type: "website",
+  },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.variable} ${outfit.variable} antialiased font-[family-name:var(--font-inter)]`}>
+    <html lang="en">
+      <body
+        className={`${inter.variable} ${outfit.variable} antialiased font-[family-name:var(--font-inter)] grain-overlay`}
+      >
         {children}
       </body>
     </html>
