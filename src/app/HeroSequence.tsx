@@ -8,31 +8,66 @@ export default function HeroSequence() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [images, setImages] = useState<HTMLImageElement[]>([]);
   const [loaded, setLoaded] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
 
   const frameCount = 240;
+  const imagesRef = useRef<HTMLImageElement[]>([]);
 
-  // Preload images
+  // Progressive image loading
   useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
+    const loadedImages: HTMLImageElement[] = new Array(frameCount).fill(null);
     let loadedCount = 0;
 
-    for (let i = 1; i <= frameCount; i++) {
+    // Load first 10 frames immediately
+    const priorityFrames = 10;
+    for (let i = 0; i < priorityFrames; i++) {
+      const index = i + 1;
       const img = new Image();
       img.crossOrigin = "anonymous";
-      // Ensure number is padded to 3 digits (001, 002, etc.)
-      const paddedIndex = String(i).padStart(3, '0');
+      const paddedIndex = String(index).padStart(3, '0');
       img.src = `/images/herosection/ezgif-frame-${paddedIndex}.png`;
 
       img.onload = () => {
+        loadedImages[i] = img;
         loadedCount++;
-        if (loadedCount === frameCount) {
-          setImages(loadedImages);
+        setLoadProgress(Math.floor((loadedCount / frameCount) * 100));
+        if (loadedCount === priorityFrames) {
           setLoaded(true);
         }
       };
-
-      loadedImages.push(img);
     }
+
+    // Load remaining frames in background
+    const remainingFrames = frameCount - priorityFrames;
+    const batchSize = 5;
+    let batchIndex = priorityFrames;
+
+    const loadBatch = () => {
+      for (let i = 0; i < batchSize && batchIndex < frameCount; i++, batchIndex++) {
+        const index = batchIndex + 1;
+        const img = new Image();
+        img.crossOrigin = "anonymous";
+        const paddedIndex = String(index).padStart(3, '0');
+        img.src = `/images/herosection/ezgif-frame-${paddedIndex}.png`;
+
+        img.onload = () => {
+          loadedImages[batchIndex] = img;
+          loadedCount++;
+          setLoadProgress(Math.floor((loadedCount / frameCount) * 100));
+        };
+      }
+
+      if (batchIndex < frameCount) {
+        // Schedule next batch with delay to avoid blocking
+        requestIdleCallback(() => loadBatch(), { timeout: 100 });
+      }
+    };
+
+    // Start loading remaining batches after a short delay
+    setTimeout(() => loadBatch(), 100);
+
+    imagesRef.current = loadedImages;
+    setImages(loadedImages);
   }, []);
 
   const { scrollYProgress } = useScroll({
@@ -95,10 +130,21 @@ export default function HeroSequence() {
 
         {/* Loading State */}
         {!loaded && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-obsidian">
-            <p className="text-[#00e5ff] tracking-widest font-[family-name:var(--font-outfit)] animate-pulse">
+          <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-obsidian">
+            <p className="text-[#00e5ff] tracking-widest font-[family-name:var(--font-outfit)] mb-4">
               INITIALIZING SEQUENCE...
             </p>
+            <div className="flex items-center gap-3">
+              <div className="w-32 h-1 bg-white/10 rounded-full overflow-hidden">
+                <div 
+                  className="h-full bg-gradient-to-r from-[#00e5ff] to-[#0099cc] transition-all duration-300"
+                  style={{ width: `${loadProgress}%` }}
+                />
+              </div>
+              <p className="text-[#00e5ff] text-xs tabular-nums">
+                {loadProgress}%
+              </p>
+            </div>
           </div>
         )}
 
