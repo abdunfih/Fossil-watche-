@@ -156,24 +156,24 @@ export default function HeroSequence() {
 
         {/* Text Overlay 1: Title */}
         {/* Replace the title with a "Technical HUD" vibe */}
-        <motion.div style={{ opacity: titleOpacity }} className="absolute inset-0 p-12 flex flex-col justify-between pointer-events-none z-20">
-          <div className="flex justify-between items-start">
+        <motion.div style={{ opacity: titleOpacity }} className="absolute inset-0 p-6 md:p-12 flex flex-col justify-between pointer-events-none z-20">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
             <div className="space-y-1">
-              <p className="text-white text-[10px] tracking-widest font-mono">MODEL: FS-5380</p>
-              <p className="text-white/40 text-[10px] font-mono">LAT: 34.0522° N // LONG: 118.2437° W</p>
+              <p className="text-white text-[8px] sm:text-[10px] tracking-widest font-mono">MODEL: FS-5380</p>
+              <p className="text-white/40 text-[8px] sm:text-[10px] font-mono">LAT: 34.0522° N // LONG: 118.2437° W</p>
             </div>
             <div className="text-right">
-              <p className="text-[#00e5ff] text-xs tracking-widest uppercase">Status: Nominal</p>
+              <p className="text-[#00e5ff] text-[8px] sm:text-xs tracking-widest uppercase">Status: Nominal</p>
             </div>
           </div>
 
           <div className="w-full flex justify-center">
-            <h1 className="text-4xl font-light tracking-[1em] text-white pl-[1em]">TOWNSMAN</h1>
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-light tracking-[0.5em] sm:tracking-[1em] text-white pl-[0.5em] sm:pl-[1em]">TOWNSMAN</h1>
           </div>
 
-          <div className="flex justify-between items-end">
-            <div className="h-24 w-[1px] bg-gradient-to-t from-[#00e5ff] to-transparent" />
-            <p className="max-w-[200px] text-[10px] leading-relaxed text-white/50 uppercase tracking-widest">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-4">
+            <div className="hidden sm:block h-24 w-[1px] bg-gradient-to-t from-[#00e5ff] to-transparent" />
+            <p className="max-w-[200px] text-[8px] sm:text-[10px] leading-relaxed text-white/50 uppercase tracking-widest">
               Automated movement tracking system active.
             </p>
           </div>
@@ -182,12 +182,12 @@ export default function HeroSequence() {
         {/* Text Overlay 2: Skeleton Dial (Top Left) */}
         <motion.div
           style={{ opacity: f1Opacity, y: f1Y }}
-          className="absolute top-[15%] left-[5%] md:top-[20%] md:left-[10%] flex flex-col items-start pointer-events-none z-10 max-w-xs md:max-w-sm"
+          className="absolute top-[15%] left-[4%] sm:left-[5%] md:top-[20%] md:left-[10%] flex flex-col items-start pointer-events-none z-10 max-w-[150px] sm:max-w-xs md:max-w-sm pr-2 sm:pr-0"
         >
-          <h2 className="text-2xl md:text-4xl font-semibold tracking-tight mb-2 font-[family-name:var(--font-outfit)] text-white drop-shadow-xl">
+          <h2 className="text-lg sm:text-2xl md:text-4xl font-semibold tracking-tight mb-1 sm:mb-2 font-[family-name:var(--font-outfit)] text-white drop-shadow-xl">
             Exposed Mechanics
           </h2>
-          <p className="text-sm md:text-lg text-[#a0a0a0] font-light drop-shadow-md">
+          <p className="text-xs sm:text-sm md:text-lg text-[#a0a0a0] font-light drop-shadow-md leading-snug">
             A striking skeleton dial reveals the beating heart of the machine. Precision engineering laid bare.
           </p>
         </motion.div>
@@ -195,12 +195,12 @@ export default function HeroSequence() {
         {/* Text Overlay 3: Self-Winding (Bottom Right) */}
         <motion.div
           style={{ opacity: f2Opacity, y: f2Y }}
-          className="absolute bottom-[25%] right-[5%] md:bottom-[20%] md:right-[10%] flex flex-col items-end text-right pointer-events-none z-10 max-w-xs md:max-w-sm"
+          className="absolute bottom-[25%] right-[4%] sm:right-[5%] md:bottom-[20%] md:right-[10%] flex flex-col items-end text-right pointer-events-none z-10 max-w-[150px] sm:max-w-xs md:max-w-sm pl-2 sm:pl-0"
         >
-          <h2 className="text-2xl md:text-4xl font-semibold tracking-tight mb-2 font-[family-name:var(--font-outfit)] text-white drop-shadow-xl">
+          <h2 className="text-lg sm:text-2xl md:text-4xl font-semibold tracking-tight mb-1 sm:mb-2 font-[family-name:var(--font-outfit)] text-white drop-shadow-xl">
             Kinetic Engine
           </h2>
-          <p className="text-sm md:text-lg text-[#a0a0a0] font-light drop-shadow-md">
+          <p className="text-xs sm:text-sm md:text-lg text-[#a0a0a0] font-light drop-shadow-md leading-snug">
             No batteries. Driven purely by your natural motion. A perpetual loop of energy suspended in time.
           </p>
         </motion.div>
@@ -208,12 +208,12 @@ export default function HeroSequence() {
         {/* Text Overlay 4: Final Feature (Bottom Left) */}
         <motion.div
           style={{ opacity: f3Opacity, y: f3Y }}
-          className="absolute bottom-[30%] left-[5%] md:bottom-[25%] md:left-[10%] flex flex-col items-start pointer-events-none z-10 max-w-xs md:max-w-sm"
+          className="absolute bottom-[30%] left-[4%] sm:left-[5%] md:bottom-[25%] md:left-[10%] flex flex-col items-start pointer-events-none z-10 max-w-[150px] sm:max-w-xs md:max-w-sm pr-2 sm:pr-0"
         >
-          <h2 className="text-2xl md:text-4xl font-semibold tracking-tight mb-2 font-[family-name:var(--font-outfit)] text-[#00e5ff] drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]">
+          <h2 className="text-lg sm:text-2xl md:text-4xl font-semibold tracking-tight mb-1 sm:mb-2 font-[family-name:var(--font-outfit)] text-[#00e5ff] drop-shadow-[0_0_15px_rgba(0,229,255,0.4)]">
             Industrial Elegance
           </h2>
-          <p className="text-sm md:text-lg text-white font-light drop-shadow-lg">
+          <p className="text-xs sm:text-sm md:text-lg text-white font-light drop-shadow-lg leading-snug">
             Forged in black stainless steel. Built to withstand the pressure of modern life.
           </p>
         </motion.div>

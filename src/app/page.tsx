@@ -91,9 +91,9 @@ export default function Home() {
       <section
         id="features"
         ref={coreRef}
-        className="relative z-10 bg-obsidian -mt-[50vh] pt-[50vh] pb-32"
+        className="relative z-10 bg-obsidian -mt-[50vh] pt-[50vh] pb-16 md:pb-32"
       >
-        <div className="flex flex-col md:flex-row items-center justify-between min-h-screen px-8 md:px-[10%] gap-16">
+        <div className="flex flex-col md:flex-row items-center justify-between min-h-screen px-4 sm:px-6 md:px-[10%] gap-8 md:gap-16">
 
           {/* Copy */}
           <motion.div
@@ -111,14 +111,14 @@ export default function Home() {
             </motion.p>
             <motion.h2
               variants={textVariants}
-              className="text-5xl md:text-[4.5rem] font-semibold mb-8 tracking-tight leading-[1.1] font-[family-name:var(--font-outfit)]"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-[4.5rem] font-semibold mb-4 md:mb-8 tracking-tight leading-[1.1] font-[family-name:var(--font-outfit)]"
             >
               Weightless Precision.<br />
               <span className="text-glow text-white">Visible Soul.</span>
             </motion.h2>
             <motion.p
               variants={textVariants}
-              className="text-lg text-white/50 max-w-[480px] mx-auto md:mx-0 leading-relaxed"
+              className="text-sm sm:text-base md:text-lg text-white/50 max-w-[480px] mx-auto md:mx-0 leading-relaxed"
             >
               The Townsman isn&apos;t just a watch — it&apos;s a window into the physics of
               time. Driven by your natural motion, the self-winding mechanism eliminates
@@ -127,11 +127,11 @@ export default function Home() {
           </motion.div>
 
           {/* Watch image */}
-          <div className="md:w-1/2 flex justify-center z-10">
+          <div className="md:w-1/2 flex justify-center z-10 w-full">
             <motion.div
               style={{ scale: watchScale, y: watchY }}
               ref={watchContainerRef}
-              className="relative w-full max-w-[300px] sm:max-w-[400px] md:max-w-[480px] aspect-square rounded-full group"
+              className="relative w-full max-w-[240px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[480px] aspect-square rounded-full group"
               onMouseMove={handleWatchMouseMove}
               onMouseLeave={handleWatchMouseLeave}
             >
@@ -183,17 +183,17 @@ export default function Home() {
             </motion.h2>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {specs.map((spec, i) => (
               <motion.div
                 key={i}
                 variants={textVariants}
-                className="glass-card p-8 md:p-10 rounded-[28px] flex flex-col justify-between min-h-[240px] group"
+                className="glass-card p-6 md:p-8 lg:p-10 rounded-[20px] md:rounded-[28px] flex flex-col justify-between min-h-[200px] md:min-h-[240px] group"
               >
-                <h3 className="text-xs text-white/40 uppercase tracking-[0.3em] mb-6 font-[family-name:var(--font-outfit)]">
+                <h3 className="text-[10px] md:text-xs text-white/40 uppercase tracking-[0.3em] mb-4 md:mb-6 font-[family-name:var(--font-outfit)]">
                   {spec.title}
                 </h3>
-                <p className="text-2xl mb-8 whitespace-pre-line leading-tight text-white/90 font-light">
+                <p className="text-xl md:text-2xl mb-6 md:mb-8 whitespace-pre-line leading-tight text-white/90 font-light text-sm md:text-base">
                   {spec.desc}
                 </p>
                 <div>
@@ -209,8 +209,8 @@ export default function Home() {
       </section>
 
       {/* ── Section 3: Brand Story ────────────────────────────────────────── */}
-      <section id="heritage" ref={brandRef} className="relative py-40 overflow-hidden">
-        <div className="flex flex-col md:flex-row items-center justify-between px-8 md:px-[10%] gap-20">
+      <section id="heritage" ref={brandRef} className="relative py-16 md:py-40 overflow-hidden">
+        <div className="flex flex-col md:flex-row items-center justify-between px-4 sm:px-6 md:px-[10%] gap-8 md:gap-20">
 
           {/* Parallax image */}
           <div className="md:w-1/2 relative rounded-[32px] overflow-hidden shadow-[0_50px_120px_rgba(0,0,0,0.9)] h-[60vh] md:h-[80vh] w-full">
@@ -265,23 +265,20 @@ export default function Home() {
       </section>
 
       {/* ── Section 4: Purchase ───────────────────────────────────────────── */}
-      <section id="purchase" className="py-40 bg-black relative border-t border-white/5">
+      <section id="purchase" className="py-16 md:py-40 bg-black relative border-t border-white/5">
         <motion.div
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-80px" }}
           variants={containerVariants}
-          className="max-w-[960px] mx-auto px-8 flex flex-col items-center"
+          className="max-w-[960px] mx-auto px-4 sm:px-6 md:px-8 flex flex-col items-center"
         >
           {/* Eyebrow + price */}
-          <motion.div variants={textVariants} className="text-center mb-16">
-            <p className="text-[9px] font-mono text-[#00e5ff]/60 tracking-[0.4em] uppercase mb-6">
-              Make It Yours
-            </p>
-            <h2 className="text-3xl md:text-5xl font-medium mb-4 font-[family-name:var(--font-outfit)] text-white/40">
+          <motion.div variants={textVariants} className="text-center mb-12 md:mb-16">
+            <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-5xl font-medium mb-3 md:mb-4 font-[family-name:var(--font-outfit)] text-white/40">
               Fossil Townsman
             </h2>
-            <p className="text-[3.5rem] sm:text-[4.5rem] md:text-[6rem] lg:text-[7rem] font-black text-white font-[family-name:var(--font-outfit)] leading-none tracking-tighter drop-shadow-[0_0_60px_rgba(255,255,255,0.08)]">
+            <p className="text-3xl sm:text-4xl md:text-5xl lg:text-[6rem] xl:text-[7rem] font-black text-white font-[family-name:var(--font-outfit)] leading-none tracking-tighter drop-shadow-[0_0_60px_rgba(255,255,255,0.08)]">
               ₹21,995
             </p>
           </motion.div>
@@ -289,21 +286,21 @@ export default function Home() {
           {/* Detail card */}
           <motion.div
             variants={textVariants}
-            className="glass-card p-8 md:p-12 lg:p-16 rounded-[32px] md:rounded-[40px] w-full"
+            className="glass-card p-6 md:p-10 lg:p-16 rounded-[24px] md:rounded-[32px] lg:rounded-[40px] w-full"
           >
-            <h3 className="text-xl font-semibold mb-10 font-[family-name:var(--font-outfit)]">
+            <h3 className="text-lg sm:text-xl font-semibold mb-8 md:mb-10 font-[family-name:var(--font-outfit)]">
               Model <span className="text-[#00e5ff]">ME3269</span>
             </h3>
             <ul className="flex flex-col gap-0">
               {purchaseDetails.map((item, i) => (
                 <li
                   key={i}
-                  className="py-6 border-b border-white/5 flex flex-col sm:flex-row sm:justify-between sm:items-end last:border-0 last:pb-0 gap-2"
+                  className="py-4 md:py-6 border-b border-white/5 flex flex-col sm:flex-row sm:justify-between sm:items-end last:border-0 last:pb-0 gap-2"
                 >
                   <strong className="text-xs text-white/30 font-normal tracking-[0.25em] uppercase">
                     {item.label}
                   </strong>
-                  <span className="text-lg text-white/90 sm:text-right max-w-[400px]">
+                  <span className="text-base md:text-lg text-white/90 sm:text-right max-w-[400px]">
                     {item.value}
                   </span>
                 </li>
@@ -312,10 +309,10 @@ export default function Home() {
           </motion.div>
 
           {/* CTA */}
-          <motion.div variants={textVariants} className="mt-14">
+          <motion.div variants={textVariants} className="mt-8 md:mt-14 w-full sm:w-auto">
             <motion.button
               onClick={() => window.open("https://www.fossil.com", "_blank")}
-              className="group relative px-12 md:px-16 py-6 md:py-7 bg-white text-black rounded-full font-[family-name:var(--font-outfit)] font-bold text-base md:text-lg uppercase tracking-wider overflow-hidden shadow-2xl hover:shadow-[0_0_50px_rgba(0,229,255,0.25)]"
+              className="group relative w-full sm:w-auto px-8 sm:px-12 md:px-16 py-4 sm:py-6 md:py-7 bg-white text-black rounded-full font-[family-name:var(--font-outfit)] font-bold text-sm sm:text-base md:text-lg uppercase tracking-wider overflow-hidden shadow-2xl hover:shadow-[0_0_50px_rgba(0,229,255,0.25)]"
               whileHover={{ scale: 1.04, y: -2 }}
               whileTap={{ scale: 0.97 }}
               transition={{ type: "spring", stiffness: 300, damping: 20 }}
@@ -338,26 +335,26 @@ export default function Home() {
       </section>
 
       {/* ── Footer ───────────────────────────────────────────────────────── */}
-      <footer className="py-16 bg-black border-t border-white/5">
-        <div className="max-w-[1400px] mx-auto px-8 md:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <footer className="py-12 md:py-16 bg-black border-t border-white/5">
+        <div className="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 lg:px-12">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 md:gap-12 mb-8 md:mb-12">
 
             {/* Brand */}
-            <div className="col-span-2">
-              <p className="text-2xl font-black font-[family-name:var(--font-outfit)] text-white tracking-[0.2em] uppercase italic mb-4">
+            <div className="col-span-1 sm:col-span-2 md:col-span-2">
+              <p className="text-xl sm:text-2xl font-black font-[family-name:var(--font-outfit)] text-white tracking-[0.2em] uppercase italic mb-3 md:mb-4">
                 Fossil
               </p>
-              <p className="text-sm text-white/30 leading-relaxed max-w-sm">
+              <p className="text-xs sm:text-sm text-white/30 leading-relaxed max-w-sm">
                 Experience time redefined. A masterpiece of precision engineering and timeless design.
               </p>
             </div>
 
             {/* Quick links */}
             <div>
-              <h4 className="text-[9px] font-mono text-white/30 tracking-[0.3em] uppercase mb-6">
+              <h4 className="text-[8px] sm:text-[9px] font-mono text-white/30 tracking-[0.3em] uppercase mb-4 md:mb-6">
                 Quick Links
               </h4>
-              <ul className="space-y-3">
+              <ul className="space-y-2 md:space-y-3">
                 {[
                   { label: "Features", href: "#features" },
                   { label: "Specifications", href: "#specs" },
@@ -367,7 +364,7 @@ export default function Home() {
                   <li key={link.href}>
                     <button
                       onClick={() => scrollToSection(link.href)}
-                      className="text-sm text-white/30 hover:text-[#00e5ff] transition-colors duration-300 uppercase tracking-wider"
+                      className="text-xs sm:text-sm text-white/30 hover:text-[#00e5ff] transition-colors duration-300 uppercase tracking-wider"
                     >
                       {link.label}
                     </button>
@@ -378,10 +375,10 @@ export default function Home() {
 
             {/* Social */}
             <div>
-              <h4 className="text-[9px] font-mono text-white/30 tracking-[0.3em] uppercase mb-6">
+              <h4 className="text-[8px] sm:text-[9px] font-mono text-white/30 tracking-[0.3em] uppercase mb-4 md:mb-6">
                 Connect
               </h4>
-              <div className="flex gap-5">
+              <div className="flex gap-4 md:gap-5">
                 <a href="#" aria-label="Twitter" className="text-white/20 hover:text-[#00e5ff] transition-colors duration-300">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.73-8.835L1.254 2.25H8.08l4.259 5.631L18.244 2.25zM17.083 20.25h1.833L7.084 4.126H5.117L17.083 20.25z" />
@@ -396,11 +393,11 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-[10px] text-white/20 font-mono tracking-widest uppercase">
+          <div className="pt-6 md:pt-8 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3 md:gap-4">
+            <p className="text-[9px] sm:text-[10px] text-white/20 font-mono tracking-widest uppercase text-center sm:text-left">
               © 2026 Fossil Group, Inc. All rights reserved.
             </p>
-            <p className="text-[10px] text-white/10 font-mono tracking-widest">
+            <p className="text-[9px] sm:text-[10px] text-white/10 font-mono tracking-widest">
               ME3269 · Mechanical Series 2026
             </p>
           </div>
