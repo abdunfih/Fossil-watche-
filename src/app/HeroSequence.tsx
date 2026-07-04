@@ -18,27 +18,40 @@ export default function HeroSequence() {
     const loadedImages: HTMLImageElement[] = new Array(frameCount).fill(null);
     let loadedCount = 0;
 
-    // Load first 10 frames immediately
-    const priorityFrames = 10;
-    for (let i = 0; i < priorityFrames; i++) {
+    // Load first 5 frames immediately for faster initial display
+    const priorityFrames = 5;
+    let priorityLoadedCount = 0;
+
+    const loadPriorityFrame = (i: number) => {
       const index = i + 1;
       const img = new Image();
       img.crossOrigin = "anonymous";
       const paddedIndex = String(index).padStart(3, '0');
       img.src = `/images/herosection/ezgif-frame-${paddedIndex}.png`;
 
-      img.onload = () => {
-        loadedImages[i] = img;
-        loadedCount++;
-        setLoadProgress(Math.floor((loadedCount / frameCount) * 100));
-        if (loadedCount === priorityFrames) {
+      img.onerror = () => {
+        priorityLoadedCount++;
+        if (priorityLoadedCount === priorityFrames) {
           setLoaded(true);
         }
       };
+
+      img.onload = () => {
+        loadedImages[i] = img;
+        loadedCount++;
+        priorityLoadedCount++;
+        setLoadProgress(Math.floor((loadedCount / frameCount) * 100));
+        if (priorityLoadedCount === priorityFrames) {
+          setLoaded(true);
+        }
+      };
+    };
+
+    for (let i = 0; i < priorityFrames; i++) {
+      loadPriorityFrame(i);
     }
 
     // Load remaining frames in background
-    const remainingFrames = frameCount - priorityFrames;
     const batchSize = 5;
     let batchIndex = priorityFrames;
 
@@ -55,6 +68,8 @@ export default function HeroSequence() {
           loadedCount++;
           setLoadProgress(Math.floor((loadedCount / frameCount) * 100));
         };
+
+
       }
 
       if (batchIndex < frameCount) {
@@ -64,7 +79,7 @@ export default function HeroSequence() {
     };
 
     // Start loading remaining batches after a short delay
-    setTimeout(() => loadBatch(), 100);
+    setTimeout(() => loadBatch(), 50);
 
     imagesRef.current = loadedImages;
     setImages(loadedImages);
@@ -97,6 +112,9 @@ export default function HeroSequence() {
     // Map scroll progress to frame index (0 to 239)
     const frameIndex = Math.min(frameCount - 1, Math.floor(latest * frameCount));
     const img = images[frameIndex];
+
+    // Only render if image is loaded
+    if (!img) return;
 
     const ctx = canvasRef.current.getContext('2d');
     ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
