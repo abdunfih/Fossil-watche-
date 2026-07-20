@@ -1,6 +1,6 @@
 "use client";
 
-import { motion, useMotionValueEvent, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 export default function HeroSequence() {
@@ -87,49 +87,39 @@ export default function HeroSequence() {
 
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start start", "end end"]
+    offset: ["start start", "end center"]
   });
 
-  // Render initial frame when loaded
+  // Render initial frame and update on scroll
   useEffect(() => {
-    if (loaded && images.length > 0 && canvasRef.current) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      const img = images[0];
-
-      // Wait for image to have dimensions before rendering
-      if (img && img.width && img.height) {
-        canvas.width = img.width;
-        canvas.height = img.height;
-
-        ctx?.clearRect(0, 0, canvas.width, canvas.height);
-        ctx?.drawImage(img, 0, 0);
-      } else if (img) {
-        // Image loaded but dimensions not ready - wait for onload
-        img.onload = () => {
-          canvas.width = img.width;
-          canvas.height = img.height;
-          ctx?.drawImage(img, 0, 0);
-        };
-      }
-    }
-  }, [loaded, images]);
-
-  // Update frame on scroll
-  useMotionValueEvent(scrollYProgress, "change", (latest) => {
     if (!loaded || images.length === 0 || !canvasRef.current) return;
 
-    // Map scroll progress to frame index (0 to 239)
-    const frameIndex = Math.min(frameCount - 1, Math.floor(latest * frameCount));
-    const img = images[frameIndex];
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    
+    // Set initial canvas dimensions from first loaded image
+    if (images[0] && images[0].width && images[0].height) {
+      canvas.width = images[0].width;
+      canvas.height = images[0].height;
+    }
 
-    // Only render if image is loaded
-    if (!img) return;
+    // Subscribe to scroll progress changes
+    const unsubscribe = scrollYProgress.onChange((latest) => {
+      if (images.length === 0 || !ctx || !canvas.width) return;
 
-    const ctx = canvasRef.current.getContext('2d');
-    ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-    ctx?.drawImage(img, 0, 0);
-  });
+      // Map scroll progress to frame index (0 to 239)
+      const frameIndex = Math.min(frameCount - 1, Math.floor(latest * frameCount));
+      const img = images[frameIndex];
+
+      // Only render if image is loaded
+      if (!img || !img.width || !img.height) return;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(img, 0, 0);
+    });
+
+    return () => unsubscribe();
+  }, [loaded, images, scrollYProgress]);
 
   // Text Animations based on scrollYProgress
   // We divide the 0-1 progress into chunks for different text overlays
