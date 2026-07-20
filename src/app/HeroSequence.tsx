@@ -97,11 +97,21 @@ export default function HeroSequence() {
       const ctx = canvas.getContext('2d');
       const img = images[0];
 
-      canvas.width = img.width;
-      canvas.height = img.height;
+      // Wait for image to have dimensions before rendering
+      if (img && img.width && img.height) {
+        canvas.width = img.width;
+        canvas.height = img.height;
 
-      ctx?.clearRect(0, 0, canvas.width, canvas.height);
-      ctx?.drawImage(img, 0, 0);
+        ctx?.clearRect(0, 0, canvas.width, canvas.height);
+        ctx?.drawImage(img, 0, 0);
+      } else if (img) {
+        // Image loaded but dimensions not ready - wait for onload
+        img.onload = () => {
+          canvas.width = img.width;
+          canvas.height = img.height;
+          ctx?.drawImage(img, 0, 0);
+        };
+      }
     }
   }, [loaded, images]);
 
