@@ -6,31 +6,32 @@ import { useEffect, useRef, useState } from "react";
 export default function HeroSequence() {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const [images, setImages] = useState<HTMLImageElement[]>([]);
+  const [images, setImages] = useState<(HTMLImageElement | null)[]>([]);
   const [loaded, setLoaded] = useState(false);
 
-  const frameCount = 240;
+  const frameCount = 197;
 
-  // Preload images
   useEffect(() => {
-    const loadedImages: HTMLImageElement[] = [];
-    let loadedCount = 0;
+    const frameImages: (HTMLImageElement | null)[] = Array(frameCount).fill(null);
+    let settledCount = 0;
 
     for (let i = 1; i <= frameCount; i++) {
       const img = new Image();
-      // Ensure number is padded to 3 digits (001, 002, etc.)
-      const paddedIndex = String(i).padStart(3, '0');
-      img.src = `/images/herosection/ezgif-frame-${paddedIndex}.png`;
-
-      img.onload = () => {
-        loadedCount++;
-        if (loadedCount === frameCount) {
-          setImages(loadedImages);
+      const paddedIndex = String(i).padStart(3, "0");
+      const settle = () => {
+        settledCount++;
+        if (settledCount === frameCount) {
+          setImages(frameImages);
           setLoaded(true);
         }
       };
 
-      loadedImages.push(img);
+      img.onload = () => {
+        frameImages[i - 1] = img;
+        settle();
+      };
+      img.onerror = settle;
+      img.src = `/images/herosection/ezgif-frame-${paddedIndex}.png`;
     }
   }, []);
 
@@ -44,7 +45,8 @@ export default function HeroSequence() {
     if (loaded && images.length > 0 && canvasRef.current) {
       const canvas = canvasRef.current;
       const ctx = canvas.getContext('2d');
-      const img = images[0];
+      const img = images.find((frame): frame is HTMLImageElement => frame !== null);
+      if (!img) return;
 
       canvas.width = img.width;
       canvas.height = img.height;
@@ -61,6 +63,7 @@ export default function HeroSequence() {
     // Map scroll progress to frame index (0 to 239)
     const frameIndex = Math.min(frameCount - 1, Math.floor(latest * frameCount));
     const img = images[frameIndex];
+    if (!img) return;
 
     const ctx = canvasRef.current.getContext('2d');
     ctx?.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
